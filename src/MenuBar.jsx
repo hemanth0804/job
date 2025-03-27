@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './MenuBar.css';
-import { BASEURL, callApi } from './api';
+import { BASEURL, callApi, getSession } from './api';
 
 export default class MenuBar extends Component {
   constructor(){
@@ -10,7 +10,11 @@ export default class MenuBar extends Component {
   }
   componentDidMount()
   {
-    callApi("POST",BASEURL +"menus/getmenus","",this.loadMenus);
+    let csr =getSession("csrid");
+    let data =JSON.stringify({csrid: csr});
+    callApi("POST",BASEURL + "menus/getmenusbyrole",data,this.loadMenus);
+
+    //callApi("POST",BASEURL +"menus/getmenus","",this.loadMenus);
   }
   loadMenus(response)
   {
